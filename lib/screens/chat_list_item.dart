@@ -15,19 +15,30 @@ class ChatListItem extends StatefulWidget {
 
 class _ChatListItemState extends State<ChatListItem>
     with TickerProviderStateMixin {
-  late Animation<double> animation;
+  late Animation<double> scaleAnimation;
+  late Animation<double> sizeAnimation;
   late AnimationController controller;
+  late AnimationController sizeANimationController;
 
   @override
   void initState() {
     super.initState();
     controller = AnimationController(
-        duration: const Duration(milliseconds: 150), vsync: this);
-    animation = CurvedAnimation(
+        duration: const Duration(milliseconds: 450), vsync: this);
+
+    sizeANimationController = AnimationController(
+        duration: const Duration(milliseconds: 350), vsync: this);
+
+    scaleAnimation = CurvedAnimation(
       parent: controller,
-      curve: Curves.elasticOut,
+      curve: Curves.elasticInOut,
+    );
+    sizeAnimation = CurvedAnimation(
+      parent: sizeANimationController,
+      curve: Curves.fastOutSlowIn,
     );
     controller.forward();
+    sizeANimationController.forward();
   }
 
   @override
@@ -37,17 +48,19 @@ class _ChatListItemState extends State<ChatListItem>
       padding: const EdgeInsets.all(2.0),
       child: ScaleTransition(
         alignment: Alignment.bottomRight,
-        scale: widget.animation,
+        scale: scaleAnimation,
         child: SizeTransition(
-          sizeFactor: animation,
+          sizeFactor: sizeAnimation,
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: null,
             child: Align(
               alignment: Alignment.bottomRight,
-              child: Container(
-                color: Colors.blue,
-                child: Text("Hi, ki koro?"),
+              child: BubbleSpecialThree(
+                text: 'Hey, ki koro?',
+                color: Color(0xFF1B97F3),
+                tail: true,
+                textStyle: TextStyle(color: Colors.white, fontSize: 16),
               ),
             ),
           ),
