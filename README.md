@@ -1,16 +1,12 @@
-# chatty
 
-A new Flutter project.
+# Chatty
 
-## Getting Started
+### v0.1
+Inspired by the chat bubble transition animation of iMessage and Telegram. Used a third party library to create the bubble, and customized animation myself. Next target is to create the chat bubble using `customPainter` and may be I will add firebase with this project if I can intregrate chat feature somewhere.
 
-This project is a starting point for a Flutter application.
+### Sample Chat Bubble Animation
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Screenshots
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![App Screenshot](sample_view.gif)
