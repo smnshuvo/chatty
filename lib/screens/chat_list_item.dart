@@ -39,7 +39,7 @@ class _ChatListItemState extends State<ChatListItem>
 
     receiverScaleAnimation = CurvedAnimation(
       parent: controller,
-      curve: Curves.easeInOutBack,
+      curve: Curves.elasticInOut,
     );
 
     sizeAnimation = CurvedAnimation(
