@@ -3,11 +3,13 @@ part of 'one_to_one_chat_screen.dart';
 class ChatListItem extends StatefulWidget {
   const ChatListItem({
     super.key,
-    required this.animation,
+    required this.msg,
     required this.chatId,
+    required this.isSender,
   });
-  final Animation<double> animation;
+  final String msg;
   final int chatId;
+  final bool isSender;
 
   @override
   State<ChatListItem> createState() => _ChatListItemState();
@@ -15,10 +17,11 @@ class ChatListItem extends StatefulWidget {
 
 class _ChatListItemState extends State<ChatListItem>
     with TickerProviderStateMixin {
-  late Animation<double> scaleAnimation;
+  late Animation<double> senderScaleAnimation;
+  late Animation<double> receiverScaleAnimation;
   late Animation<double> sizeAnimation;
   late AnimationController controller;
-  late AnimationController sizeANimationController;
+  late AnimationController sizeAnimationController;
 
   @override
   void initState() {
@@ -26,40 +29,51 @@ class _ChatListItemState extends State<ChatListItem>
     controller = AnimationController(
         duration: const Duration(milliseconds: 450), vsync: this);
 
-    sizeANimationController = AnimationController(
+    sizeAnimationController = AnimationController(
         duration: const Duration(milliseconds: 350), vsync: this);
 
-    scaleAnimation = CurvedAnimation(
+    senderScaleAnimation = CurvedAnimation(
       parent: controller,
       curve: Curves.elasticInOut,
     );
+
+    receiverScaleAnimation = CurvedAnimation(
+      parent: controller,
+      curve: Curves.easeInOutBack,
+    );
+
     sizeAnimation = CurvedAnimation(
-      parent: sizeANimationController,
+      parent: sizeAnimationController,
       curve: Curves.fastOutSlowIn,
     );
     controller.forward();
-    sizeANimationController.forward();
+    sizeAnimationController.forward();
   }
 
   @override
   Widget build(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.headlineMedium!;
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: ScaleTransition(
-        alignment: Alignment.bottomRight,
-        scale: scaleAnimation,
+        alignment:
+            widget.isSender ? Alignment.bottomRight : Alignment.bottomLeft,
+        scale: widget.isSender ? senderScaleAnimation : receiverScaleAnimation,
         child: SizeTransition(
           sizeFactor: sizeAnimation,
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: null,
             child: Align(
-              alignment: Alignment.bottomRight,
+              alignment: widget.isSender
+                  ? Alignment.bottomRight
+                  : Alignment.bottomLeft,
               child: BubbleSpecialThree(
-                text: 'Hey, ki koro?',
-                color: Color(0xFF1B97F3),
+                text: widget.msg,
+                color: widget.isSender
+                    ? Color(0xFF1B97F3)
+                    : Color.fromARGB(255, 1, 153, 54),
                 tail: true,
+                isSender: widget.isSender,
                 textStyle: TextStyle(color: Colors.white, fontSize: 16),
               ),
             ),

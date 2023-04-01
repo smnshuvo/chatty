@@ -16,6 +16,11 @@ class _OneToOneChatScreenState extends State<OneToOneChatScreen> {
   final _listKey = GlobalKey<AnimatedListState>();
   late ListModel<int> _list;
   late int _nextItem;
+  final randomMsgs = [
+    "hi, ki koro?",
+    "ki obostha?",
+    "kon deshe te jabi uira re..."
+  ];
 
   @override
   void initState() {
@@ -63,7 +68,11 @@ class _OneToOneChatScreenState extends State<OneToOneChatScreen> {
     int index,
     Animation<double> animation,
   ) {
-    return ChatListItem(animation: animation, chatId: _list[index]);
+    return ChatListItem(
+      chatId: _list[index],
+      msg: randomMsgs[index % 2],
+      isSender: index % 2 == 0,
+    );
   }
 
   Widget _buildRemoveItem(
@@ -71,6 +80,10 @@ class _OneToOneChatScreenState extends State<OneToOneChatScreen> {
     int index,
     Animation<double> animation,
   ) {
-    return ChatListItem(animation: animation, chatId: _list[index]);
+    return ChatListItem(
+      chatId: _list[index],
+      msg: randomMsgs[index % 2],
+      isSender: index % 2 == 0,
+    );
   }
 }
